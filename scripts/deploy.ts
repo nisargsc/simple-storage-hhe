@@ -1,18 +1,16 @@
 import { ethers } from "hardhat";
+import { SimpleStorage } from "../typechain-types";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+  const simpleStorageFactory = await ethers.getContractFactory("SimpleStorage");
+  const simpleStorage = (await simpleStorageFactory.deploy()) as SimpleStorage;
 
-  const lockedAmount = ethers.utils.parseEther("0.001");
-
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
+  console.log("Deploying the SimpleStorage contract...")
+  await simpleStorage.deployed();
+  const deployer = await simpleStorage.signer.getAddress();
 
   console.log(
-    `Lock with ${ethers.utils.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    `Simple with deployed to ${simpleStorage.address} by ${deployer}`
   );
 }
 
