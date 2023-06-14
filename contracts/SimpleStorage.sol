@@ -24,8 +24,8 @@ contract SimpleStorage {
     event PersonAdded(string indexed name, uint256 indexed favoriteNumber);
 
     // State Variables //
-    address owner;
-    uint256 favoriteNumber;
+    address public owner;
+    uint256 public favoriteNumber;
 
     struct Person {
         uint256 favoriteNumber;
@@ -37,7 +37,7 @@ contract SimpleStorage {
 
     // Modifiers //
     modifier onlyOwner() {
-        if (msg.sender == owner) {
+        if (msg.sender != owner) {
             revert Unauthorized();
         }
         _;

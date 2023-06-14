@@ -5,7 +5,7 @@ async function main() {
   const simpleStorageFactory = await ethers.getContractFactory("SimpleStorage");
   const simpleStorage = (await simpleStorageFactory.deploy()) as SimpleStorage;
 
-  console.log("Deploying the SimpleStorage contract...")
+  console.log("Deploying the SimpleStorage contract...");
   await simpleStorage.deployed();
   const deployer = await simpleStorage.signer.getAddress();
 
